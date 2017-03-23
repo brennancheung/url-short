@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { Button, Icon } from 'semantic-ui-react'
 
-import { fetchLinks, deleteLink, setAddLinkVisibility } from './actions'
+import { fetchLinks, createLink, deleteLink, setAddLinkVisibility } from './actions'
 
 function mapStateToProps (state) {
   return {
@@ -54,10 +54,41 @@ const AddLinkButton = ({ ...rest }) => {
   )
 }
 
-const AddLinkForm = () => {
-  return (
-    <h1>Add Link Form</h1>
-  )
+class AddLinkForm extends React.Component {
+  constructor () {
+    super()
+    this.state = {
+      url: ''
+    }
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      url: e.value
+    })
+  }
+
+  handleSubmit = () => {
+    const { dispatch } = this.props
+    dispatch(createLink(this.state.url))
+  }
+
+  render () {
+    const { url } = this.state
+
+    return (
+      <div>
+        <h1>Add a new link</h1>
+        <form className="ui form">
+          <div className="field">
+            <label>URL</label>
+            <input type="text" name="url" placeholder="URL" value={url} onChange={this.handleChange} />
+          </div>
+          <button className="ui button" type="button" onClick={this.handleSubmit}>Submit</button>
+        </form>
+      </div>
+    )
+  }
 }
 
 const LinkList = ({ links, addLinkFormVisible, showAddLinkForm, handleView, handleDelete }) => (
