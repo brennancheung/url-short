@@ -54,6 +54,7 @@ const AddLinkButton = ({ ...rest }) => {
   )
 }
 
+@connect()
 class AddLinkForm extends React.Component {
   constructor () {
     super()
@@ -64,13 +65,17 @@ class AddLinkForm extends React.Component {
 
   handleChange = (e) => {
     this.setState({
-      url: e.value
+      url: e.target.value
     })
   }
 
   handleSubmit = () => {
     const { dispatch } = this.props
-    dispatch(createLink(this.state.url))
+    dispatch(createLink({ userId: 123, url: this.state.url }))
+    this.setState({
+      url: ''
+    })
+    dispatch(setAddLinkVisibility(false))
   }
 
   render () {

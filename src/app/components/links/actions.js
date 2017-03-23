@@ -31,9 +31,9 @@ export const deleteLink = (id) => async (dispatch) => {
   }
 }
 
-export const createLink = (url) => async (dispatch) => {
+export const createLink = ({ userId, url }) => async (dispatch) => {
   try {
-    const response = await axios.post(`/links`, { url })
+    const response = await axios.post(`/links`, { userId, url })
     if (response.status !== 201) {
       alert('TODO: implement better error handling')
     }
